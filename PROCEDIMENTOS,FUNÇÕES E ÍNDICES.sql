@@ -3,39 +3,44 @@ USE agendabd;
 
 CREATE TABLE contato (
   ID_cont INT PRIMARY KEY AUTO_INCREMENT,
-  NOME            VARCHAR(100) NOT NULL,
-  SOBRENOME         VARCHAR(100),
+  NOME VARCHAR(100) NOT NULL,
+  SOBRENOME VARCHAR(100),
   DATA_NASCIMENTO DATE
  );
 
 CREATE TABLE telefone(
   ID_tel INT PRIMARY KEY AUTO_INCREMENT,
   NUMERO VARCHAR(20) NOT NULL,
-  TIPO   VARCHAR(20) NOT NULL
+  TIPO VARCHAR(20) NOT NULL
+  ID_cont INT
   );
 
 CREATE TABLE email (
   ID_ema INT PRIMARY KEY AUTO_INCREMENT,
   ENDERECO VARCHAR(100) NOT NULL,
-  TIPO     VARCHAR(20)  NOT NULL
+  TIPO VARCHAR(20) NOT NULL,
+  fk_ID_const INT
 );
+
 /*Inserindo uma coluna da tabela*/
 ALTER TABLE telefone ADD COLUMN ID_cont INT;
-ALTER TABLE email ADD COLUMN fk_ID_cont INT;
+ALTER TABLE email DROP COLUMN fk_ID_cont;
 
 /*O comando Alter pode tanto aletar para inserir como Excluir uma coluna da tabela*/
-ALTER TABLE email DROP COLUMN ID_cont;
+ALTER TABLE email DROP COLUMN fk_ID_cont;
 
 /*alterando a tabela telefone e add foreign key*/
-ALTER TABLE telefone ADD CONSTRAINT  ID_cont
+ALTER TABLE telefone
+ADD CONSTRAINT fk_telefone_contato
 FOREIGN KEY(ID_cont) REFERENCES contato(ID_cont);
 
 /*alterando a tabela Email e add foreign key*/
-ALTER TABLE email ADD CONSTRAINT  fk_ID_cont
+ALTER TABLE email
+ADD CONSTRAINT fk_email_contato
 FOREIGN KEY(fk_ID_cont) REFERENCES contato(ID_cont);
 
 /*descrevendo todas as tabela*/
-show tables;
+SHOW TABLES;
 
 /*Excluir uma  tabela*/
 DROP TABLE contato;  
@@ -46,6 +51,7 @@ SELECT COUNT(*) FROM contato;
 
 /*O comando INSERT INTO irá inserir dados na tabela Banco de Dados, é possível inserir 
 mais de um registro em apenas um INSERT INTO, vide exemplo*/
+
 INSERT INTO contato (NOME, SOBRENOME, DATA_NASCIMENTO) VALUES
 ('Ana','Silva','1995-03-12'),
 ('Bruno','Oliveira','1990-07-21'),
@@ -98,109 +104,109 @@ INSERT INTO contato (NOME, SOBRENOME, DATA_NASCIMENTO) VALUES
 ('André','Paiva','1993-05-12'),
 ('Bianca','Nogueira','1996-07-19');
 
-INSERT INTO telefone (NUMERO, TIPO) VALUES
-('81999990001','Celular'),
-('81999990002','Celular'),
-('8133330003','Residencial'),
-('8133330004','Comercial'),
-('81988880005','Celular'),
-('81988880006','Celular'),
-('81332220007','Residencial'),
-('81332220008','Comercial'),
-('81977770009','Celular'),
-('81977770010','Celular'),
-('81331110011','Residencial'),
-('81331110012','Comercial'),
-('81966660013','Celular'),
-('81966660014','Celular'),
-('81330000015','Residencial'),
-('81330000016','Comercial'),
-('81955550017','Celular'),
-('81955550018','Celular'),
-('81334440019','Residencial'),
-('81334440020','Comercial'),
-('81944440021','Celular'),
-('81944440022','Celular'),
-('81335550023','Residencial'),
-('81335550024','Comercial'),
-('81933330025','Celular'),
-('81933330026','Celular'),
-('81336660027','Residencial'),
-('81336660028','Comercial'),
-('81922220029','Celular'),
-('81922220030','Celular'),
-('81337770031','Residencial'),
-('81337770032','Comercial'),
-('81911110033','Celular'),
-('81911110034','Celular'),
-('81338880035','Residencial'),
-('81338880036','Comercial'),
-('81900000037','Celular'),
-('81900000038','Celular'),
-('81339990039','Residencial'),
-('81339990040','Comercial'),
-('81888880041','Celular'),
-('81888880042','Celular'),
-('81330010043','Residencial'),
-('81330010044','Comercial'),
-('81877770045','Celular'),
-('81877770046','Celular'),
-('81330020047','Residencial'),
-('81330020048','Comercial'),
-('81866660049','Celular'),
-('81866660050','Celular');
+INSERT INTO telefone (NUMERO, TIPO, ID_cont) VALUES
+('81999990001','Celular',1),
+('81999990002','Celular',2),
+('8133330003','Residencial',3),
+('8133330004','Comercial',4),
+('81988880005','Celular',5),
+('81988880006','Celular',6),
+('81332220007','Residencial',7),
+('81332220008','Comercial',8),
+('81977770009','Celular',9),
+('81977770010','Celular',10),
+('81331110011','Residencial',11),
+('81331110012','Comercial',12),
+('81966660013','Celular',13),
+('81966660014','Celular',14),
+('81330000015','Residencial',15),
+('81330000016','Comercial',16),
+('81955550017','Celular',17),
+('81955550018','Celular',18),
+('81334440019','Residencial',19),
+('81334440020','Comercial',20),
+('81944440021','Celular',21),
+('81944440022','Celular',22),
+('81335550023','Residencial',23),
+('81335550024','Comercial',24),
+('81933330025','Celular',25),
+('81933330026','Celular',26),
+('81336660027','Residencial',27),
+('81336660028','Comercial',28),
+('81922220029','Celular',29),
+('81922220030','Celular',30),
+('81337770031','Residencial',31),
+('81337770032','Comercial',32),
+('81911110033','Celular',33),
+('81911110034','Celular',34),
+('81338880035','Residencial',35),
+('81338880036','Comercial',36),
+('81900000037','Celular'37),
+('81900000038','Celular',38),
+('81339990039','Residencial',39),
+('81339990040','Comercial',40),
+('81888880041','Celular',41),
+('81888880042','Celular',42),
+('81330010043','Residencial',43),
+('81330010044','Comercial',44),
+('81877770045','Celular'45),
+('81877770046','Celular',46),
+('81330020047','Residencial',47),
+('81330020048','Comercial',48),
+('81866660049','Celular',49),
+('81866660050','Celular',50);
 
 INSERT INTO email (ENDERECO, TIPO) VALUES
-('ana.silva@email.com','Pessoal'),
-('bruno.oliveira@email.com','Pessoal'),
-('carlos.souza@email.com','Trabalho'),
-('daniela.costa@email.com','Pessoal'),
-('eduardo.pereira@email.com','Trabalho'),
-('fernanda.rodrigues@email.com','Pessoal'),
-('gabriel.almeida@email.com','Trabalho'),
-('helena.nascimento@email.com','Pessoal'),
-('igor.lima@email.com','Trabalho'),
-('juliana.araujo@email.com','Pessoal'),
-('kleber.fernandes@email.com','Trabalho'),
-('larissa.carvalho@email.com','Pessoal'),
-('marcelo.gomes@email.com','Trabalho'),
-('natalia.martins@email.com','Pessoal'),
-('otavio.rocha@email.com','Trabalho'),
-('patricia.barbosa@email.com','Pessoal'),
-('rafael.ribeiro@email.com','Trabalho'),
-('sabrina.freitas@email.com','Pessoal'),
-('thiago.batista@email.com','Trabalho'),
-('vanessa.teixeira@email.com','Pessoal'),
-('william.correia@email.com','Trabalho'),
-('yasmin.monteiro@email.com','Pessoal'),
-('zeca.moraes@email.com','Trabalho'),
-('aline.duarte@email.com','Pessoal'),
-('beto.cavalcanti@email.com','Trabalho'),
-('caio.peixoto@email.com','Pessoal'),
-('debora.farias@email.com','Trabalho'),
-('elisa.queiroz@email.com','Pessoal'),
-('felipe.sales@email.com','Trabalho'),
-('gustavo.pinto@email.com','Pessoal'),
-('hugo.torres@email.com','Trabalho'),
-('isabela.vasconcelos@email.com','Pessoal'),
-('joao.andrade@email.com','Trabalho'),
-('karina.meireles@email.com','Pessoal'),
-('leandro.bezerra@email.com','Trabalho'),
-('mariana.aguiar@email.com','Pessoal'),
-('nicolas.lacerda@email.com','Trabalho'),
-('olivia.borges@email.com','Pessoal'),
-('paulo.campos@email.com','Trabalho'),
-('renata.rezende@email.com','Pessoal'),
-('sergio.braga@email.com','Trabalho'),
-('tatiane.ferraz@email.com','Pessoal'),
-('ubiratan.vieira@email.com','Trabalho'),
-('valeria.guimaraes@email.com','Pessoal'),
-('wagner.pacheco@email.com','Trabalho'),
-('xavier.tavares@email.com','Pessoal'),
-('yuri.bittencourt@email.com','Trabalho'),
-('zilda.prado@email.com','Pessoal'),
-('andre.paiva@email.com','Trabalho'),
-('bianca.nogueira@email.com','Pessoal');
+('ana.silva@email.com','Pessoal',1),
+('bruno.oliveira@email.com','Pessoal',2),
+('carlos.souza@email.com','Trabalho',3),
+('daniela.costa@email.com','Pessoal',4),
+('eduardo.pereira@email.com','Trabalho',5),
+('fernanda.rodrigues@email.com','Pessoal',6),
+('gabriel.almeida@email.com','Trabalho',7),
+('helena.nascimento@email.com','Pessoal',8),
+('igor.lima@email.com','Trabalho',9),
+('juliana.araujo@email.com','Pessoal',10),
+('kleber.fernandes@email.com','Trabalho',11),
+('larissa.carvalho@email.com','Pessoal',12),
+('marcelo.gomes@email.com','Trabalho',13),
+('natalia.martins@email.com','Pessoal',14),
+('otavio.rocha@email.com','Trabalho',15),
+('patricia.barbosa@email.com','Pessoal',16),
+('rafael.ribeiro@email.com','Trabalho',17),
+('sabrina.freitas@email.com','Pessoal',18),
+('thiago.batista@email.com','Trabalho',19),
+('vanessa.teixeira@email.com','Pessoal',20),
+('william.correia@email.com','Trabalho',21),
+('yasmin.monteiro@email.com','Pessoal',22),
+('zeca.moraes@email.com','Trabalho',23),
+('aline.duarte@email.com','Pessoal',24),
+('beto.cavalcanti@email.com','Trabalho',25),
+('caio.peixoto@email.com','Pessoal',26),
+('debora.farias@email.com','Trabalho',27),
+('elisa.queiroz@email.com','Pessoal',28),
+('felipe.sales@email.com','Trabalho'29),
+('gustavo.pinto@email.com','Pessoal',30),
+('hugo.torres@email.com','Trabalho',31),
+('isabela.vasconcelos@email.com','Pessoal',32),
+('joao.andrade@email.com','Trabalho',33),
+('karina.meireles@email.com','Pessoal',34),
+('leandro.bezerra@email.com','Trabalho',35),
+('mariana.aguiar@email.com','Pessoal',36),
+('nicolas.lacerda@email.com','Trabalho',37),
+('olivia.borges@email.com','Pessoal',38),
+('paulo.campos@email.com','Trabalho',39),
+('renata.rezende@email.com','Pessoal',40),
+('sergio.braga@email.com','Trabalho',41),
+('tatiane.ferraz@email.com','Pessoal',42),
+('ubiratan.vieira@email.com','Trabalho',43),
+('valeria.guimaraes@email.com','Pessoal',44),
+('wagner.pacheco@email.com','Trabalho',45),
+('xavier.tavares@email.com','Pessoal',46),
+('yuri.bittencourt@email.com','Trabalho',47),
+('zilda.prado@email.com','Pessoal',48),
+('andre.paiva@email.com','Trabalho',49),
+('bianca.nogueira@email.com','Pessoal',50);
 
   /*Excluir um registro de uma tabela*/  
 DELETE FROM contato WHERE ID_cont=2;
@@ -211,33 +217,37 @@ DELETE FROM contato WHERE ID_cont=2;
    /*Usando Inner Join nas tabelas*/   
 SELECT c.ID_cont, c.NOME, c.SOBRENOME, t.NUMERO 
 FROM contato c
-INNER JOIN telefone t ON c.ID_cont = t.ID_tel;
+INNER JOIN telefone t
+ON c.ID_cont = t.ID_cont;
 
 /*Usando left Join nas tabelas*/
 SELECT c.ID_cont, c.NOME, c.SOBRENOME, t.NUMERO 
 FROM contato c
-LEFT JOIN telefone t ON c.ID_cont = t.ID_tel;
+LEFT JOIN telefone t 
+ON c.ID_cont = t.ID_cont;
 
 /*Usando rigth Join nas tabelas*/
 SELECT c.ID_cont, c.NOME, c.SOBRENOME, t.NUMERO 
 FROM contato c
-RIGHT JOIN telefone t ON c.ID_cont = t.ID_tel;
+RIGHT JOIN telefone t
+ON c.ID_cont = t.ID_cont;
 
 /*Usando cross Join nas tabelas*/
 SELECT c.ID_cont, c.NOME, c.SOBRENOME, t.NUMERO 
 FROM contato c
-CROSS JOIN telefone t ON c.ID_cont = t.ID_tel;
+INNER JOIN telefone t ON c.ID_cont = t.ID_cont;
 
 /*Unindo tabelas, para isso é necessário chamar "atributos" que seja
 parecidos em ambas as tabelas*/
 SELECT ID_cont FROM contato
 UNION
-SELECT ID_ema FROM email;
+SELECT fk_ID_cont FROM email;
 
 /*Usando UNION nos Joins nas tabelas*/
 SELECT c.ID_cont, c.NOME, c.SOBRENOME, t.NUMERO 
 FROM contato c
-CROSS JOIN telefone t ON c.ID_cont = t.ID_tel
+CROSS JOIN telefone t 
+ON c.ID_cont = t.ID_tel
 UNION
 SELECT c.ID_cont, c.NOME, c.SOBRENOME, t.NUMERO 
 FROM contato c
@@ -304,20 +314,22 @@ CRIANDO UM CÁLCULO COM A FUNÇAO JÁ ARMANEZADA. PARA FAZER ISSO BASTA
 PASSAR UM SELECT COMO NO EXEMPLO E JUNTAR COM UM ALLIAS PARA CRIAR UMA TABELA TEMPORARIA 
 E RETORNAR UM VALOR QUE VAI SER DESCRITO NO NOVO SALÁRIO*/
 CREATE TABLE salario(
-Id int(11) primary key auto_increment,
+Id int primary key auto_increment,
 salario decimal(10,2));
 
-insert into salario (salario) values(100),
+insert into salario (salario) values
+(100),
 (200),
 (300);
 
-SELECT salario, fn_valor(salario,4) AS 'NOVO_SALARIO'
-FROM salario WHERE Id= 3;
+SELECT salario, fn_valor(salario,4) AS NOVO_SALARIO
+FROM salario 
+WHERE Id= 3;
 
 /*E COMO FAZER PARA EXCLUIR UMA FUNÇÃO?*/
 /*EXISTEM DOIS MODOS, DIRETAMENTE NA FUNÇÃO COM O BOTÃO DIREITO DO MOUSE OU COM LINHA DE COMANDO
 */
-DROP FUNCTION fn_valor2;
+DROP FUNCTION fn_valor;
 
 /*STORED PROCEDURES 
 PROCEDIMENTO DE ARMAZENAMENTO- É UMA SUB-ROTINA
@@ -336,10 +348,14 @@ SMALLINT = É NECESSÁRIO DIZER QUAL O TIPO DE DADO
 DESTE PARÂMETRO
  
 */
-CREATE PROCEDURE verSalario (varValor double)
+CREATE PROCEDURE verSalario (varValor INT
+BEGIN)
 SELECT CONCAT( 'Os salarios são: ' ,salario) AS Novo_Salario
 FROM salario
 WHERE Id = varValor;
+END //
+
+DELIMITER ;
 
 /*INVOCANDO PROCEDIMENTOS
 CALL nome_procedimento(parâmetros); 
@@ -432,7 +448,7 @@ EXPLAIN- VAI EXPLANAR, OU SEJA, EXPLICAR TUDO O QUE VEM A FRENTE DELE
 NO COMANDO ABAIXO USANDO O SELECT PARA DEMONSTRAR ISSO.
 ESTE COMANDO SERVE PARA APLICAR OTMIZAÇÃO DE PERFORMANCE NO BANCO
 */
-  EXPLAIN SELECT * FROM contato WHERE ID_cont=1;
+EXPLAIN SELECT * FROM contato WHERE ID_cont=1;
 EXPLAIN SELECT * FROM contato WHERE nome='Italo';
 
 /*COMANDOS INDEX
